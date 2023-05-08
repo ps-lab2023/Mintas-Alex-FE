@@ -1,0 +1,81 @@
+/* Add some background color and padding to the container */
+.container-xl {
+    background-color: #212121;
+    padding: 20px;
+  }
+  
+  /* Style the table title */
+  .table-title h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  /* Style the "Print Report" button */
+  .btn-primary {
+    background-color: #212121;
+    border-color: #212121;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Style the "New Worker" button */
+  .btn-success {
+    background-color: #212121;
+    border-color: #212121;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Style the worker status dropdown */
+  select.btn-info {
+    background-color: #212121;
+    border-color: #212121;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  /* Style the table headers */
+  table th {
+    background-color: #424242;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    padding: 24px 20px;
+  }
+  
+  /* Style the table rows */
+  table tbody tr {
+    background-color: #ffffff;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+  /* Style the delete button */
+  a.delete i.material-icons {
+    color: #f44336;
+    cursor: pointer;
+  }
+  
+  /* Add a hover effect to the table rows */
+  table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Increase the font size */
+  table {
+    font-size: 20px;
+  }
+  
+  /* Add spacing between table cells */
+  table td, table th {
+    padding: 16px 20px;
+  }
+  
+  /* Spread the table more */
+  .table-responsive {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  

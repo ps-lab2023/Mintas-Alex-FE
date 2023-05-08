@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FixMyHome - Register</title>
+    <link rel="stylesheet" href="register.component.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Register</h1>
+      <form action="#" method="POST">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" placeholder="Enter your email" required>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" placeholder="Enter your date of birth" required>
+        <label for="accountType">Account Type:</label>
+        <select id="accountType" name="accountType">
+          <option value="customer">Customer</option>
+          <option value="worker">Worker</option>
+        </select>
+        <button type="submit">Register</button>
+      </form>
+      <p>Already have an account ? <a href="login">Login here</a></p>
+    </div>
+  </body>
+</html>
