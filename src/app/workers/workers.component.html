@@ -1,75 +1,133 @@
 <!--<div>{{ appState$ | async | json }}</div>-->
 <div class="container-xl">
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Manage Workers</h2>
-                    </div>
-                    <div class="col-sm-6">
-                        <button type="button" class="btn btn-primary">Print Report</button>
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Manage Workers</h2>
+          </div>
+          <div class="col-sm-6">
+            <button (click)="printReport()" type="button" class="btn btn-primary">Generate EXCEL</button>
 
-                        <a href="#addEmployeeModal" class="btn btn-succes" data-toggle="modal">
-                            <i class="material-icons">&#xE147;</i>
-                            <span>New Worker</span>
-                        </a>
+            <a href="#addWorkerModal" class="btn btn-succes" data-toggle="modal">
+              <i class="material-icons">add</i>
+              <span>New Worker</span>
+            </a>
 
-                        <span>
-                            <select name="status" class="btn btn-info" style="height: 32.91px;">
-                                <option value="ALL">ALL</option>
-                                <option value="TileSetter">TileSetter</option>
-                                <option value="Painter">Painter</option>
-                                <option value="Electrician">Electrician</option>
-                                <option value="Plumber">Plumber</option>
-                                <option value="Locksmith">Locksmith</option>
-                            </select>
-                        </span>
-                    </div>
-                </div>
-            </div> <br>
-            <ng-container *ngIf="(appState$ | async) as appState" [ngSwitch]="appState.dataState">
-                <ng-container *ngSwitchCase="DataState.LOADING_STATE">
-                    <div class="col-md-12 single-note-item text-center">
-                        <div class="spinner-border text-info" role="status"></div>
-                    </div>
-                </ng-container>
-                <ng-container *ngSwitchCase="DataState.LOADED_STATE">
-                    <table class="table table-striped table-hover" id="workers">
-                        <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Age</th>
-                                <th>Job</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngFor="let worker of appState.appData.data.workers; let i = index">
-                            <tr>
-                                <td>{{ worker.firstName }}</td>
-                                <td>{{ worker.lastName }}</td>
-                                <td>{{ worker.email }}</td>
-                                <td>{{ worker.phoneNumber }}</td>
-                                <td>{{ worker.age }}</td>
-                                <td>
-                                    {{ worker.job }}
-                                </td>
-                                <td>
-                                    <a class="delete" data-toggle="modal" style="cursor: pointer;"><i
-                                            class="material-icons" data-toggle="modal" title="Delete"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </ng-container>
-                <ng-container *ngSwitchCase="DataState.ERROR_STATE">
-                    <div class="alert-danger">
-                        {{ appState.error }}
-                    </div>
-                </ng-container>
-            </ng-container>
+            <span>
+              <select (ngModelChange)="filterWorkers($event)" ngModel="ALL" name="job" class="btn btn-info"
+                style="height: 32.91px;">
+                <option value="ALL">ALL</option>
+                <option value="TileSetter">TileSetter</option>
+                <option value="Painter">Painter</option>
+                <option value="Electrician">Electrician</option>
+                <option value="Plumber">Plumber</option>
+                <option value="Locksmith">Locksmith</option>
+              </select>
+            </span>
+          </div>
         </div>
+      </div> <br>
+      <ng-container *ngIf="(appState$ | async) as appState" [ngSwitch]="appState.dataState">
+        <ng-container *ngSwitchCase="DataState.LOADING_STATE">
+          <div class="col-md-12 single-note-item text-center">
+            <div class="spinner-border text-info" role="status"></div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="DataState.LOADED_STATE">
+          <table class="table table-striped table-hover" id="workers">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Age</th>
+                <th>Job</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let worker of appState.appData.data.workers; let i = index">
+              <tr>
+                <td>{{ worker.firstName }}</td>
+                <td>{{ worker.lastName }}</td>
+                <td>{{ worker.email }}</td>
+                <td>{{ worker.phoneNumber }}</td>
+                <td>{{ worker.age }}</td>
+                <td>
+                  {{ worker.job }}
+                </td>
+                <td>
+                  <a (click)="deleteWorker(worker)" class="delete" data-toggle="modal" style="cursor: pointer;"><i class="material-icons"
+                      data-toggle="modal" title="Delete">delete</i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-container *ngSwitchCase="DataState.ERROR_STATE">
+          <div class="alert-danger">
+            {{ appState.error }}
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
+  </div>
+</div>
+
+<!-- Add Worker Modal -->
+<div id="addWorkerModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form #workerForm="ngForm" (ngSubmit)="saveWorker(workerForm)">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Worker</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>firstName</label>
+            <input type="text" ngModel name="firstName" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>lastName</label>
+            <input type="text" ngModel name="lastName" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>email</label>
+            <input type="text" ngModel name="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>phoneNumber</label>
+            <input type="text" ngModel name="phoneNumber" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="dateOfBirth">Date of Birth</label>
+            <input type="date" ngModel ngModel class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+          </div>
+          <div class="form-group">
+            <label for="job">Job</label>
+            <select class="form-control" ngModel id="job" name="job" required>
+              <option disabled selected>Select a job</option>
+              <option value="TileSetter">Tile Setter</option>
+              <option value="Painter">Painter</option>
+              <option value="Plumber">Plumber</option>
+              <option value="Electrician">Electrician</option>
+              <option value="Locksmith">Locksmith</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" id="closeModal" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" [disabled]="workerForm.invalid || (isLoading$ | async)" class="btn btn-succes">
+            <i *ngIf="isLoading$ | async" class="fas fa-spinner fa-spin"></i>
+            <span *ngIf="isLoading$ | async">Saving...</span>
+            <span *ngIf="!(isLoading$ | async)">Add</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
